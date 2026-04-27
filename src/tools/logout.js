@@ -17,7 +17,7 @@ export const logout = {
       return "No session to log out of.";
     }
     try {
-      await apiRequest("/auth/logout", { method: "POST", requireAuth: true });
+      await apiRequest("/api/auth/logout", { method: "POST", requireAuth: true });
     } catch {
       // Best-effort: clear local state regardless of server response.
     }

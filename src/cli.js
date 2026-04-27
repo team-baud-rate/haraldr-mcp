@@ -18,7 +18,7 @@ if (sub === "install") {
       "  --dry-run    Show what would change without writing files.",
       "",
       "Environment:",
-      "  HARALDR_API_URL  Override the API base URL (default https://api-haraldr.joel.net).",
+      "  HARALDR_API_URL  Override the API origin (default https://haraldr.joel.net).",
     ].join("\n"),
   );
 } else {

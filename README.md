@@ -24,21 +24,6 @@ node src/cli.js install --local
 
 This writes a `node <abs-path-to-src/cli.js>` entry instead of `npx @haraldr/domain-tools`.
 
-### Manual setup
-
-If you prefer to edit configs by hand:
-
-```json
-{
-  "mcpServers": {
-    "haraldr-domain-tools": {
-      "command": "npx",
-      "args": ["-y", "@haraldr/domain-tools"]
-    }
-  }
-}
-```
-
 ## Tools
 
 | Tool | Purpose |
@@ -52,7 +37,7 @@ If you prefer to edit configs by hand:
 
 | Env var | Default | Purpose |
 |---|---|---|
-| `HARALDR_API_URL` | `https://api-haraldr.joel.net` | Override for local development (e.g. `http://localhost:8787`). |
+| `HARALDR_API_URL` | `https://haraldr.joel.net` | Override API origin for local development (e.g. `http://localhost:8787`). |
 
 ## Session storage
 

@@ -18,7 +18,7 @@ export const requestLoginCode = {
     },
   },
   async handler({ email }) {
-    const { data } = await apiRequest("/auth/request-code", {
+    const { data } = await apiRequest("/api/auth/request-code", {
       method: "POST",
       body: { email },
     });

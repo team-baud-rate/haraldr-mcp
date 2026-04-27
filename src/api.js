@@ -1,6 +1,6 @@
 import { loadSession } from "./session.js";
 
-const DEFAULT_API_URL = "https://api-haraldr.joel.net";
+const DEFAULT_API_URL = "https://haraldr.joel.net";
 
 export function apiBaseUrl() {
   const override = process.env.HARALDR_API_URL;

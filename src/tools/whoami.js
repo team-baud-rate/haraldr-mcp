@@ -15,7 +15,7 @@ export const whoami = {
     const session = await loadSession();
     if (!session) return "Not logged in. Call request_login_code to start.";
     try {
-      const { data } = await apiRequest("/auth/me", { requireAuth: true });
+      const { data } = await apiRequest("/api/auth/me", { requireAuth: true });
       const user = data?.user;
       if (!user) return "Session present but API returned no user.";
       return `Logged in as ${user.email} (id ${user.id}).`;

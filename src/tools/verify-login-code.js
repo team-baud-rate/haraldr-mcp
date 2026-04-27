@@ -17,7 +17,7 @@ export const verifyLoginCode = {
     },
   },
   async handler({ email, code }) {
-    const { data, cookie } = await apiRequest("/auth/verify-code", {
+    const { data, cookie } = await apiRequest("/api/auth/verify-code", {
       method: "POST",
       body: { email, code },
     });
