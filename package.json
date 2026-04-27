@@ -1,0 +1,27 @@
+{
+  "name": "@haraldr/domain-tools",
+  "version": "0.1.0",
+  "description": "MCP server for Haraldr — login and (eventually) domain management tools for AI agents.",
+  "type": "module",
+  "bin": {
+    "haraldr-domain-tools": "src/cli.js"
+  },
+  "main": "src/server.js",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.0"
+  },
+  "keywords": [
+    "mcp",
+    "haraldr",
+    "domains",
+    "ai-agent"
+  ],
+  "license": "MIT"
+}
