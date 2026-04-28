@@ -7,6 +7,9 @@
     "haraldr-domain-tools": "src/cli.js"
   },
   "main": "src/server.js",
+  "scripts": {
+    "test": "node --test"
+  },
   "engines": {
     "node": ">=18"
   },

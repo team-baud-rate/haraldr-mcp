@@ -9,8 +9,9 @@ import { requestLoginCode } from "./tools/request-login-code.js";
 import { verifyLoginCode } from "./tools/verify-login-code.js";
 import { whoami } from "./tools/whoami.js";
 import { logout } from "./tools/logout.js";
+import { searchDomains } from "./tools/search-domains.js";
 
-const tools = [requestLoginCode, verifyLoginCode, whoami, logout];
+const tools = [requestLoginCode, verifyLoginCode, whoami, logout, searchDomains];
 const byName = new Map(tools.map((t) => [t.definition.name, t]));
 
 export async function runServer() {

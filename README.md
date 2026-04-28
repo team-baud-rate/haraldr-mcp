@@ -1,6 +1,6 @@
 # @haraldr/domain-tools
 
-MCP server that lets AI agents (Claude Code, Claude Desktop, Cursor, …) authenticate against the Haraldr API and (eventually) manage domains.
+MCP server that lets AI agents (Claude Code, Claude Desktop, Cursor, …) authenticate against the Haraldr API and search domain availability.
 
 ## Install
 
@@ -32,12 +32,15 @@ This writes a `node <abs-path-to-src/cli.js>` entry instead of `npx @haraldr/dom
 | `verify_login_code` | Verify the code; persists session cookie to `~/.config/haraldr/session.json`. |
 | `whoami` | Show the currently logged-in user. |
 | `logout` | Clear the session locally and on the server. |
+| `search_domains` | Search exact domains and keyword-generated ideas. Requires login. |
 
 ## Configuration
 
 | Env var | Default | Purpose |
 |---|---|---|
 | `HARALDR_API_URL` | `https://haraldr.joel.net` | Override API origin for local development (e.g. `http://localhost:8787`). |
+
+`search_domains` calls `POST /api/domains/search`, so the Haraldr API Worker must be configured with Openprovider credentials or a current Openprovider bearer token.
 
 ## Session storage
 
