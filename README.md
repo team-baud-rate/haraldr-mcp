@@ -14,6 +14,12 @@ npx @haraldr/domain-tools install
 
 That's it — restart your agent and the tools are ready to use.
 
+To remove it later:
+
+```sh
+npx @haraldr/domain-tools uninstall
+```
+
 ## What you can do
 
 Ask your agent things like:

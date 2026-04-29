@@ -217,6 +217,15 @@
  */
 
 /**
+ * Result of removing the haraldr entry from a single agent config.
+ *
+ * @typedef {Object} UninstallResult
+ * @property {InstallTarget} target
+ * @property {'removed' | 'not-installed' | 'skipped'} status
+ * @property {string} [reason]
+ */
+
+/**
  * Shape of an agent's config file that we read/write (we only touch mcpServers).
  *
  * @typedef {Object} AgentConfigFile

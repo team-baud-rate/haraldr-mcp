@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 /** @typedef {import('./types.js').PatchResult} PatchResult */
 /** @typedef {import('./types.js').AgentConfigFile} AgentConfigFile */
 
-const SERVER_NAME = "haraldr-domain-tools";
+export const SERVER_NAME = "haraldr-domain-tools";
 
 /** @type {McpServerEntry} */
 const NPX_ENTRY = {
@@ -35,7 +35,7 @@ function localEntry() {
  *
  * @returns {InstallTarget[]}
  */
-function candidates() {
+export function candidates() {
   const home = os.homedir();
   const xdg =
     process.env.XDG_CONFIG_HOME && process.env.XDG_CONFIG_HOME.length > 0
@@ -89,7 +89,7 @@ function candidates() {
  * @param {string} p
  * @returns {Promise<boolean>}
  */
-async function dirExists(p) {
+export async function dirExists(p) {
   try {
     const stat = await fs.stat(p);
     return stat.isDirectory();
@@ -104,7 +104,7 @@ async function dirExists(p) {
  * @param {string} filePath
  * @returns {Promise<AgentConfigFile>}
  */
-async function readJson(filePath) {
+export async function readJson(filePath) {
   try {
     const raw = await fs.readFile(filePath, "utf8");
     if (raw.trim().length === 0) return {};
@@ -122,7 +122,7 @@ async function readJson(filePath) {
  * @param {unknown} data
  * @returns {Promise<void>}
  */
-async function writeJsonAtomic(filePath, data) {
+export async function writeJsonAtomic(filePath, data) {
   const tmp = `${filePath}.tmp`;
   await fs.writeFile(tmp, `${JSON.stringify(data, null, 2)}\n`);
   await fs.rename(tmp, filePath);
@@ -179,7 +179,7 @@ async function patchTarget(target, entry, dryRun) {
  * @param {string} status
  * @returns {string}
  */
-function formatRow(label, file, status) {
+export function formatRow(label, file, status) {
   const labelCol = label.padEnd(16);
   const fileCol = file.padEnd(60);
   return `${labelCol} ${fileCol} ${status}`;
