@@ -33,6 +33,15 @@ This writes a `node <abs-path-to-src/cli.js>` entry instead of `npx @haraldr/dom
 | `whoami` | Show the currently logged-in user. |
 | `logout` | Clear the session locally and on the server. |
 | `search_domains` | Search exact domains and keyword-generated ideas. Requires login. |
+| `order_domain` | Order a domain for $15. Returns a Stripe Checkout URL the user opens in a browser. Requires login. |
+| `confirm_payment` | Verify a previously created order has been paid and report whether the domain has been registered. Requires login. |
+
+### Ordering a domain
+
+1. Use `search_domains` to find an available name.
+2. Call `order_domain` with the FQDN (e.g. `example.com`). The tool returns a Stripe Checkout URL.
+3. Open the URL in a browser, complete payment with the billing details Stripe collects (these are reused as the Openprovider registrant contact).
+4. Tell the agent you've paid; the agent calls `confirm_payment` with the order id from step 2. The API verifies via Stripe webhook (with a polling fallback) and registers the domain through Openprovider.
 
 ## Configuration
 

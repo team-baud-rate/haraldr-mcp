@@ -10,8 +10,20 @@ import { verifyLoginCode } from "./tools/verify-login-code.js";
 import { whoami } from "./tools/whoami.js";
 import { logout } from "./tools/logout.js";
 import { searchDomains } from "./tools/search-domains.js";
+import { orderDomain } from "./tools/order-domain.js";
+import { confirmPayment } from "./tools/confirm-payment.js";
+import { listDomains } from "./tools/list-domains.js";
 
-const tools = [requestLoginCode, verifyLoginCode, whoami, logout, searchDomains];
+const tools = [
+  requestLoginCode,
+  verifyLoginCode,
+  whoami,
+  logout,
+  searchDomains,
+  orderDomain,
+  confirmPayment,
+  listDomains,
+];
 const byName = new Map(tools.map((t) => [t.definition.name, t]));
 
 export async function runServer() {
