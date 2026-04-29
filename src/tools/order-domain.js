@@ -1,5 +1,9 @@
 import { apiRequest } from "../api.js";
 
+/** @typedef {import('../types.js').Tool} Tool */
+/** @typedef {import('../types.js').CreateOrderResponse} CreateOrderResponse */
+
+/** @type {Tool} */
 export const orderDomain = {
   definition: {
     name: "order_domain",
@@ -17,14 +21,27 @@ export const orderDomain = {
       additionalProperties: false,
     },
   },
-  async handler({ domain } = {}) {
+  /**
+   * Validate the requested domain, create a Haraldr order, and return a
+   * checkout URL the caller must visit to complete payment.
+   *
+   * @param {Record<string, unknown>} args
+   * @returns {Promise<string>}
+   */
+  async handler(args) {
+    const domain = args.domain;
     if (typeof domain !== "string" || domain.length === 0) {
       throw new Error("domain is required");
     }
-    const normalized = domain.trim().toLowerCase().replace(/^\.+|\.+$/g, "");
+    const normalized = domain
+      .trim()
+      .toLowerCase()
+      .replace(/^\.+|\.+$/g, "");
     const dotIndex = normalized.indexOf(".");
     if (dotIndex < 1 || dotIndex === normalized.length - 1) {
-      throw new Error(`Invalid domain "${domain}". Use a full domain like example.com.`);
+      throw new Error(
+        `Invalid domain "${domain}". Use a full domain like example.com.`,
+      );
     }
     const label = normalized.slice(0, dotIndex);
     const tld = normalized.slice(dotIndex + 1);
@@ -35,8 +52,9 @@ export const orderDomain = {
       requireAuth: true,
     });
 
-    const order = data?.order;
-    const checkoutUrl = data?.checkoutUrl;
+    const payload = /** @type {CreateOrderResponse | undefined} */ (data);
+    const order = payload?.order;
+    const checkoutUrl = payload?.checkoutUrl;
     if (!order || !checkoutUrl) {
       throw new Error("Order created but no Stripe Checkout URL was returned.");
     }
@@ -53,6 +71,13 @@ export const orderDomain = {
   },
 };
 
+/**
+ * Format a price stored in minor units as `CURRENCY DOLLARS.CC`.
+ *
+ * @param {number | undefined} cents
+ * @param {string | undefined} currency
+ * @returns {string}
+ */
 function formatAmount(cents, currency) {
   if (typeof cents !== "number") return "";
   const dollars = (cents / 100).toFixed(2);

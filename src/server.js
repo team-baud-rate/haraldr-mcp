@@ -14,6 +14,9 @@ import { orderDomain } from "./tools/order-domain.js";
 import { confirmPayment } from "./tools/confirm-payment.js";
 import { listDomains } from "./tools/list-domains.js";
 
+/** @typedef {import('./types.js').Tool} Tool */
+
+/** @type {Tool[]} */
 const tools = [
   requestLoginCode,
   verifyLoginCode,
@@ -24,8 +27,16 @@ const tools = [
   confirmPayment,
   listDomains,
 ];
+/** @type {Map<string, Tool>} */
 const byName = new Map(tools.map((t) => [t.definition.name, t]));
 
+/**
+ * Boot the MCP server: register the tool list/call handlers against the SDK,
+ * connect a stdio transport, and resolve once the connection is established.
+ * Used as the default entry point when the CLI is invoked with no subcommand.
+ *
+ * @returns {Promise<void>}
+ */
 export async function runServer() {
   const server = new Server(
     { name: "@haraldr/domain-tools", version: "0.1.0" },
@@ -40,7 +51,9 @@ export async function runServer() {
     const tool = byName.get(request.params.name);
     if (!tool) {
       return {
-        content: [{ type: "text", text: `Unknown tool: ${request.params.name}` }],
+        content: [
+          { type: "text", text: `Unknown tool: ${request.params.name}` },
+        ],
         isError: true,
       };
     }

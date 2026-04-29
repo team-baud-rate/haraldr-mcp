@@ -1,5 +1,10 @@
 import { apiRequest } from "../api.js";
 
+/** @typedef {import('../types.js').Tool} Tool */
+/** @typedef {import('../types.js').ListedDomain} ListedDomain */
+/** @typedef {import('../types.js').ListDomainsResponse} ListDomainsResponse */
+
+/** @type {Tool} */
 export const listDomains = {
   definition: {
     name: "list_domains",
@@ -11,18 +16,31 @@ export const listDomains = {
       additionalProperties: false,
     },
   },
+  /**
+   * Fetch the caller's registered domains and render one summary line per
+   * domain. Returns "No domains registered." when the list is empty.
+   *
+   * @returns {Promise<string>}
+   */
   async handler() {
     const { data } = await apiRequest("/api/domains", {
       method: "GET",
       requireAuth: true,
     });
 
-    const domains = Array.isArray(data?.domains) ? data.domains : [];
+    const payload = /** @type {ListDomainsResponse | undefined} */ (data);
+    const domains = Array.isArray(payload?.domains) ? payload.domains : [];
     if (domains.length === 0) return "No domains registered.";
     return domains.map(formatDomain).join("\n");
   },
 };
 
+/**
+ * Render a single registered domain as `fqdn; key=value; ...`.
+ *
+ * @param {ListedDomain} d
+ * @returns {string}
+ */
 function formatDomain(d) {
   const parts = [d.fqdn || "(unknown)"];
   if (d.status) parts.push(`status=${d.status}`);
