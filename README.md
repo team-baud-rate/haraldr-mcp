@@ -1,56 +1,52 @@
 # @haraldr/domain-tools
 
-MCP server that lets AI agents (Claude Code, Claude Desktop, Cursor, …) authenticate against the Haraldr API and search domain availability.
+Search and register domain names directly from your AI agent.
+
+This MCP server connects Claude Code, Claude Desktop, Cursor, and other compatible AI tools to [Haraldr](https://haraldr.joel.net) so you can find a great domain name and buy it without leaving the conversation.
 
 ## Install
 
-Auto-detect installed AI agents and add the server to each:
+One command sets it up for every AI agent it finds on your machine:
 
 ```sh
 npx @haraldr/domain-tools install
 ```
 
-This patches the `mcpServers` object in any of these files that exist:
+That's it — restart your agent and the tools are ready to use.
 
-- Claude Code — `~/.claude.json`
-- Claude Desktop — `~/.config/Claude/claude_desktop_config.json` (Linux), `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS), `%APPDATA%/Claude/claude_desktop_config.json` (Windows)
-- Cursor — `~/.cursor/mcp.json`
+## What you can do
 
-Use `--dry-run` to preview changes. For local development against a checkout (before publishing to npm), use `--local`:
+Ask your agent things like:
 
-```sh
-node src/cli.js install --local
-```
-
-This writes a `node <abs-path-to-src/cli.js>` entry instead of `npx @haraldr/domain-tools`.
+- *"Find me an available `.com` domain for a coffee subscription startup."*
+- *"Is `mycoolapp.io` available?"*
+- *"Order `example.com` for me."*
+- *"Did my domain payment go through?"*
 
 ## Tools
 
-| Tool | Purpose |
+| Tool | What it does |
 |---|---|
-| `request_login_code` | Request a 6-digit login code by email. |
-| `verify_login_code` | Verify the code; persists session cookie to `~/.config/haraldr/session.json`. |
-| `whoami` | Show the currently logged-in user. |
-| `logout` | Clear the session locally and on the server. |
-| `search_domains` | Search exact domains and keyword-generated ideas. Requires login. |
-| `order_domain` | Order a domain for $15. Returns a Stripe Checkout URL the user opens in a browser. Requires login. |
-| `confirm_payment` | Verify a previously created order has been paid and report whether the domain has been registered. Requires login. |
+| `request_login_code` | Email yourself a 6-digit login code. |
+| `verify_login_code` | Sign in with the code. |
+| `whoami` | Show who's currently signed in. |
+| `logout` | Sign out. |
+| `search_domains` | Check exact names and discover keyword-based ideas. |
+| `order_domain` | Order a domain for $15 — returns a Stripe checkout link. |
+| `confirm_payment` | Confirm payment and registration after checkout. |
 
-### Ordering a domain
+## Buying a domain
 
-1. Use `search_domains` to find an available name.
-2. Call `order_domain` with the FQDN (e.g. `example.com`). The tool returns a Stripe Checkout URL.
-3. Open the URL in a browser, complete payment with the billing details Stripe collects (these are reused as the Openprovider registrant contact).
-4. Tell the agent you've paid; the agent calls `confirm_payment` with the order id from step 2. The API verifies via Stripe webhook (with a polling fallback) and registers the domain through Openprovider.
+1. Ask your agent to **search** for a name you like.
+2. Ask it to **order** the domain — you'll get a Stripe checkout URL.
+3. Open the URL, pay, and Stripe collects the billing details used as your registrant contact.
+4. Tell your agent you've paid, and it'll **confirm** the order and register the domain for you.
 
-## Configuration
+## Links
 
-| Env var | Default | Purpose |
-|---|---|---|
-| `HARALDR_API_URL` | `https://haraldr.joel.net` | Override API origin for local development (e.g. `http://localhost:8787`). |
+- Haraldr — <https://haraldr.joel.net>
+- Source & contributing — see [DEV.md](./DEV.md)
 
-`search_domains` calls `POST /api/domains/search`, so the Haraldr API Worker must be configured with Openprovider credentials or a current Openprovider bearer token.
+## License
 
-## Session storage
-
-The session cookie is stored at `~/.config/haraldr/session.json` (mode `0600`). Honours `XDG_CONFIG_HOME` if set. Delete the file to force a re-login.
+MIT
