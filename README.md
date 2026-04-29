@@ -9,15 +9,17 @@ This MCP server connects Claude Code, Claude Desktop, Cursor, and other compatib
 One command sets it up for every AI agent it finds on your machine:
 
 ```sh
-npx @haraldr/domain-tools install
+npx @haraldr/domain-tools@latest install
 ```
 
 That's it — restart your agent and the tools are ready to use.
 
+> The `@latest` tag is intentional: `npx` caches packages under `~/.npm/_npx/`, so the bare form may reuse a stale install command months later. `@latest` always pulls the newest version. The MCP server entry it writes into your agent config uses the cached form, so agent startup stays fast.
+
 To remove it later:
 
 ```sh
-npx @haraldr/domain-tools uninstall
+npx @haraldr/domain-tools@latest uninstall
 ```
 
 ## What you can do

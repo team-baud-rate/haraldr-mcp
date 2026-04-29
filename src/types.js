@@ -232,4 +232,13 @@
  * @property {Record<string, McpServerEntry>} [mcpServers]
  */
 
+/**
+ * Result of installing or uninstalling the bundled skill at the user level.
+ *
+ * @typedef {Object} SkillResult
+ * @property {string} destPath
+ * @property {'patched' | 'unchanged' | 'removed' | 'not-installed' | 'skipped'} status
+ * @property {string} [reason]
+ */
+
 export {};

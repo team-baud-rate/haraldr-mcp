@@ -1,3 +1,4 @@
+import { promises as fs } from "node:fs";
 import os from "node:os";
 
 import {
@@ -6,11 +7,13 @@ import {
   dirExists,
   formatRow,
   readJson,
+  userSkillDir,
   writeJsonAtomic,
 } from "./install.js";
 
 /** @typedef {import('./types.js').InstallTarget} InstallTarget */
 /** @typedef {import('./types.js').UninstallResult} UninstallResult */
+/** @typedef {import('./types.js').SkillResult} SkillResult */
 
 /**
  * Remove the haraldr-domain-tools entry from a single agent's config file.
@@ -42,14 +45,45 @@ async function unpatchTarget(target, dryRun) {
 }
 
 /**
+ * Remove the user-level skill directory installed by `installSkill`. Never
+ * touches `~/.claude/skills/` itself.
+ *
+ * @param {boolean} dryRun
+ * @returns {Promise<SkillResult>}
+ */
+export async function uninstallSkill(dryRun) {
+  const dest = userSkillDir();
+  if (!(await dirExists(dest))) {
+    return { destPath: dest, status: "not-installed" };
+  }
+  if (!dryRun) {
+    await fs.rm(dest, { recursive: true, force: true });
+  }
+  return { destPath: dest, status: "removed" };
+}
+
+/**
+ * Render a path relative to $HOME as `~/...` for compact reporting.
+ *
+ * @param {string} p
+ * @returns {string}
+ */
+function displayPath(p) {
+  const home = os.homedir();
+  return p.startsWith(home) ? `~${p.slice(home.length)}` : p;
+}
+
+/**
  * CLI entry point for `haraldr-domain-tools uninstall`. Removes the server
- * entry from every detected agent config and prints a per-target report.
+ * entry from every detected agent config, removes the bundled skill from
+ * ~/.claude/skills/, and prints a per-target report.
  *
  * @param {string[]} args
  * @returns {Promise<void>}
  */
 export async function runUninstall(args) {
   const dryRun = args.includes("--dry-run");
+  const noSkill = args.includes("--no-skill");
 
   console.log(
     `Removing "${SERVER_NAME}" from agent configs${dryRun ? " (dry run)" : ""}\n`,
@@ -61,10 +95,6 @@ export async function runUninstall(args) {
   );
 
   for (const r of results) {
-    const home = os.homedir();
-    const display = r.target.filePath.startsWith(home)
-      ? `~${r.target.filePath.slice(home.length)}`
-      : r.target.filePath;
     let mark;
     let note;
     if (r.status === "removed") {
@@ -77,7 +107,28 @@ export async function runUninstall(args) {
       mark = "·";
       note = r.reason ?? "skipped";
     }
-    console.log(`${mark} ${formatRow(r.target.agent, display, note)}`);
+    console.log(
+      `${mark} ${formatRow(r.target.agent, displayPath(r.target.filePath), note)}`,
+    );
+  }
+
+  const skill = noSkill ? null : await uninstallSkill(dryRun);
+  if (skill) {
+    let mark;
+    let note;
+    if (skill.status === "removed") {
+      mark = dryRun ? "~" : "✓";
+      note = dryRun ? "would remove" : "removed";
+    } else if (skill.status === "not-installed") {
+      mark = "=";
+      note = "not installed";
+    } else {
+      mark = "·";
+      note = skill.reason ?? "skipped";
+    }
+    console.log(
+      `${mark} ${formatRow("Skill", displayPath(skill.destPath), note)}`,
+    );
   }
 
   const removed = results.filter((r) => r.status === "removed").length;
