@@ -1,6 +1,6 @@
 {
   "name": "@haraldr/domain-tools",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MCP server for Haraldr — login and (eventually) domain management tools for AI agents.",
   "type": "module",
   "bin": {
