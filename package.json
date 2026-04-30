@@ -7,8 +7,17 @@
     "haraldr-domain-tools": "src/cli.js"
   },
   "main": "src/server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/team-baud-rate/haraldr-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/team-baud-rate/haraldr-mcp/issues"
+  },
+  "homepage": "https://github.com/team-baud-rate/haraldr-mcp#readme",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "test": "node --test",
@@ -30,7 +39,15 @@
     "@modelcontextprotocol/sdk": "^1.17.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.5.2",
+    "@commitlint/config-conventional": "^20.5.0",
     "@eslint/js": "^10.0.1",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.6",
+    "@semantic-release/npm": "^13.1.5",
+    "@semantic-release/release-notes-generator": "^14.1.0",
     "@types/node": "^25.5.0",
     "eslint": "^10.1.0",
     "eslint-config-prettier": "^10.1.8",
@@ -38,6 +55,7 @@
     "globals": "^17.4.0",
     "husky": "^9.1.7",
     "prettier": "^3.8.1",
+    "semantic-release": "^25.0.3",
     "typescript": "^6.0.2"
   },
   "keywords": [
