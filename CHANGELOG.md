@@ -1,3 +1,11 @@
+## [0.2.1](https://github.com/team-baud-rate/haraldr-mcp/compare/v0.2.0...v0.2.1) (2026-05-01)
+
+
+### Bug Fixes
+
+* bump version ([60ef082](https://github.com/team-baud-rate/haraldr-mcp/commit/60ef082c0a8e6f0e774c895abb3a4270cee96bea))
+* rename package to haraldr for cleaner npx invocation ([7c01323](https://github.com/team-baud-rate/haraldr-mcp/commit/7c0132333abbea3d2ad239feebb09ef9880ff860))
+
 # [0.2.0](https://github.com/team-baud-rate/haraldr-mcp/compare/v0.1.0...v0.2.0) (2026-04-30)
 
 
