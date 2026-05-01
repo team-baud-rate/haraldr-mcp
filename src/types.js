@@ -4,7 +4,7 @@
 /// <reference path="../node_modules/@types/node/path.d.ts" />
 /// <reference path="../node_modules/@types/node/url.d.ts" />
 /**
- * Shared type definitions for the @haraldr/domain-tools MCP server.
+ * Shared type definitions for the haraldr MCP server.
  * This file is never imported at runtime — only used by tsc via JSDoc.
  *
  * The triple-slash references above selectively pull in just the

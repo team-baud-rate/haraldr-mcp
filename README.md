@@ -1,4 +1,4 @@
-# @haraldr/domain-tools
+# haraldr
 
 Search and register domain names directly from your AI agent.
 
@@ -9,7 +9,7 @@ This MCP server connects Claude Code, Claude Desktop, Cursor, and other compatib
 One command sets it up for every AI agent it finds on your machine:
 
 ```sh
-npx @haraldr/domain-tools@latest install
+npx haraldr@latest install
 ```
 
 That's it — restart your agent and the tools are ready to use.
@@ -19,7 +19,7 @@ That's it — restart your agent and the tools are ready to use.
 To remove it later:
 
 ```sh
-npx @haraldr/domain-tools@latest uninstall
+npx haraldr@latest uninstall
 ```
 
 ## What you can do

@@ -10,14 +10,14 @@ if (sub === "install") {
 } else if (sub === "--help" || sub === "-h" || sub === "help") {
   console.log(
     [
-      "@haraldr/domain-tools",
+      "haraldr",
       "",
       "Usage:",
-      "  npx @haraldr/domain-tools             Run the MCP server on stdio (used by AI agents).",
-      "  npx @haraldr/domain-tools install     Auto-detect installed agents, patch their mcpServers config,",
-      "                                        and copy the haraldr-domains skill to ~/.claude/skills/.",
-      "  npx @haraldr/domain-tools uninstall   Remove the server entry from every detected agent config",
-      "                                        and remove the skill from ~/.claude/skills/.",
+      "  npx haraldr             Run the MCP server on stdio (used by AI agents).",
+      "  npx haraldr install     Auto-detect installed agents, patch their mcpServers config,",
+      "                          and copy the haraldr-domains skill to ~/.claude/skills/.",
+      "  npx haraldr uninstall   Remove the server entry from every detected agent config",
+      "                          and remove the skill from ~/.claude/skills/.",
       "",
       "Install flags:",
       "  --local      Point agents at this local checkout (node <abs-path>) instead of npx.",

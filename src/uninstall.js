@@ -16,7 +16,7 @@ import {
 /** @typedef {import('./types.js').SkillResult} SkillResult */
 
 /**
- * Remove the haraldr-domain-tools entry from a single agent's config file.
+ * Remove the haraldr entry from a single agent's config file.
  *
  * @param {InstallTarget} target
  * @param {boolean} dryRun
@@ -74,9 +74,9 @@ function displayPath(p) {
 }
 
 /**
- * CLI entry point for `haraldr-domain-tools uninstall`. Removes the server
- * entry from every detected agent config, removes the bundled skill from
- * ~/.claude/skills/, and prints a per-target report.
+ * CLI entry point for `haraldr uninstall`. Removes the server entry from every
+ * detected agent config, removes the bundled skill from ~/.claude/skills/, and
+ * prints a per-target report.
  *
  * @param {string[]} args
  * @returns {Promise<void>}

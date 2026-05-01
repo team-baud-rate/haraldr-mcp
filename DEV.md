@@ -8,7 +8,7 @@ To register the server against a local checkout (before publishing to npm), use 
 node src/cli.js install --local
 ```
 
-This writes a `node <abs-path-to-src/cli.js>` entry instead of `npx @haraldr/domain-tools`. Use `--dry-run` to preview changes.
+This writes a `node <abs-path-to-src/cli.js>` entry instead of `npx haraldr`. Use `--dry-run` to preview changes.
 
 ## Configuration
 

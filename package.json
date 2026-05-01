@@ -1,10 +1,10 @@
 {
-  "name": "@haraldr/domain-tools",
+  "name": "haraldr",
   "version": "0.2.0",
   "description": "MCP server for Haraldr — login and (eventually) domain management tools for AI agents.",
   "type": "module",
   "bin": {
-    "haraldr-domain-tools": "src/cli.js"
+    "haraldr": "src/cli.js"
   },
   "main": "src/server.js",
   "repository": {
@@ -16,7 +16,6 @@
   },
   "homepage": "https://github.com/team-baud-rate/haraldr-mcp#readme",
   "publishConfig": {
-    "access": "public",
     "provenance": true
   },
   "scripts": {

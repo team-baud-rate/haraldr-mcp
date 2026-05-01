@@ -39,7 +39,7 @@ const byName = new Map(tools.map((t) => [t.definition.name, t]));
  */
 export async function runServer() {
   const server = new Server(
-    { name: "@haraldr/domain-tools", version: "0.1.0" },
+    { name: "haraldr", version: "0.1.0" },
     { capabilities: { tools: {} } },
   );
 

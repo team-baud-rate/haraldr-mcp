@@ -5,7 +5,7 @@ description: Search for available domain names and buy them through Haraldr. Use
 
 # Haraldr Domains
 
-Help the user find a domain name and buy it. Haraldr is a domain registrar; this skill orchestrates the eight `haraldr-domain-tools` MCP tools so the user gets from "I want a domain" to "the domain is registered" without re-deriving the workflow each session.
+Help the user find a domain name and buy it. Haraldr is a domain registrar; this skill orchestrates the eight `haraldr` MCP tools so the user gets from "I want a domain" to "the domain is registered" without re-deriving the workflow each session.
 
 ## When to use this skill
 
@@ -21,10 +21,10 @@ If the user just wants to *look up DNS records* or *manage a domain registered e
 
 ## Required MCP
 
-This skill uses the `@haraldr/domain-tools` MCP server. If `search_domains`, `order_domain`, etc. aren't in the available tools, tell the user to install it:
+This skill uses the `haraldr` MCP server. If `search_domains`, `order_domain`, etc. aren't in the available tools, tell the user to install it:
 
 ```sh
-npx @haraldr/domain-tools@latest install
+npx haraldr@latest install
 ```
 
 …then restart their AI agent.

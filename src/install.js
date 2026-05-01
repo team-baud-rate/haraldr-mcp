@@ -9,13 +9,13 @@ import { fileURLToPath } from "node:url";
 /** @typedef {import('./types.js').AgentConfigFile} AgentConfigFile */
 /** @typedef {import('./types.js').SkillResult} SkillResult */
 
-export const SERVER_NAME = "haraldr-domain-tools";
+export const SERVER_NAME = "haraldr";
 export const SKILL_NAME = "haraldr-domains";
 
 /** @type {McpServerEntry} */
 const NPX_ENTRY = {
   command: "npx",
-  args: ["-y", "@haraldr/domain-tools"],
+  args: ["-y", "haraldr"],
 };
 
 /**
@@ -165,8 +165,8 @@ function entriesEqual(a, b) {
 }
 
 /**
- * Patch a single agent's config file: add or replace the haraldr-domain-tools
- * entry under `mcpServers`. Returns a status describing what changed.
+ * Patch a single agent's config file: add or replace the haraldr entry under
+ * `mcpServers`. Returns a status describing what changed.
  *
  * @param {InstallTarget} target
  * @param {McpServerEntry} entry
@@ -307,9 +307,9 @@ function displayPath(p) {
 }
 
 /**
- * CLI entry point for `haraldr-domain-tools install`. Patches every detected
- * agent config, copies the bundled skill to ~/.claude/skills/, and prints a
- * per-target status report.
+ * CLI entry point for `haraldr install`. Patches every detected agent config,
+ * copies the bundled skill to ~/.claude/skills/, and prints a per-target
+ * status report.
  *
  * @param {string[]} args
  * @returns {Promise<void>}
@@ -320,11 +320,9 @@ export async function runInstall(args) {
   const noSkill = args.includes("--no-skill");
   const entry = local ? localEntry() : NPX_ENTRY;
 
-  const mode = local
-    ? `local (${entry.args[0]})`
-    : "npx (@haraldr/domain-tools)";
+  const mode = local ? `local (${entry.args[0]})` : "npx (haraldr)";
   console.log(
-    `Installing @haraldr/domain-tools as "${SERVER_NAME}" — ${mode}${dryRun ? " (dry run)" : ""}\n`,
+    `Installing haraldr as "${SERVER_NAME}" — ${mode}${dryRun ? " (dry run)" : ""}\n`,
   );
 
   const targets = candidates();
