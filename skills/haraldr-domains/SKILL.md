@@ -73,11 +73,23 @@ Pick TLDs that fit the use case (`.com` and `.io` for tech; `.dev` for developer
 
 If everything is taken, *don't give up* — propose 2-3 keyword variations (`bean-box`, `beandrop`, `morningbean`) and re-search.
 
+## Domain selection control
+
+After presenting results for an open-ended search or any search with multiple viable domains, ask the human-in-the-loop how much control they want before an order is created:
+
+> Do you want to explicitly pick/confirm the domain before I create the order, or should I choose the best available option and proceed?
+
+Use their answer as the selection mode:
+
+- **Explicit-confirm mode** — wait for the user to choose or confirm the exact domain. Do not call `order_domain` until they answer (`To confirm: order beanbox.io for $15?`).
+- **Agent-decides mode** — pick the strongest available, non-premium option using the user's stated criteria, TLD preferences, memorability, and price. You may call `order_domain` for that choice without a second domain-selection prompt, but explain which domain you chose and why when sharing the Stripe Checkout URL.
+- **Already explicit** — if the user already named one exact domain and asked to buy/register it, treat that as explicit selection. Still ask a clarifying question if there are multiple variants, spelling ambiguity, premium pricing, or any other uncertainty about the intended domain.
+
 ## Ordering
 
 Domains are a flat $15 USD through Haraldr regardless of TLD list price (Haraldr eats the difference for non-premium TLDs). Before calling `order_domain`:
 
-- Confirm the **exact** name with the user (`To confirm: order beanbox.io for $15?`).
+- Resolve the domain selection mode above: either get explicit confirmation for the exact name, or confirm the user has delegated the choice to the agent.
 - Make sure they're aware payment happens via Stripe Checkout in their browser.
 
 Then call:
