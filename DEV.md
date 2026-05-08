@@ -38,3 +38,17 @@ npm run lint      # ESLint (runs typecheck first)
 npm run lint:fix  # ESLint with --fix
 npm run typecheck # tsc against jsconfig.json
 ```
+
+## GitHub Issues Symphony
+
+Haraldr uses GitHub Issues as the automation control plane. The repo-owned workflow policy lives in [`WORKFLOW.md`](./WORKFLOW.md).
+
+Issue labels act as the state machine:
+
+- `symphony:queued` — eligible for Haraldr automation.
+- `symphony:running` — claimed by Haraldr in a per-issue worktree.
+- `symphony:review` — PR opened and ready for human review.
+- `symphony:done` — terminal/completed.
+- `symphony:blocked` / `symphony:failed` — stop automation until a human updates the issue.
+
+The worker must open PRs with `Closes #<issue>` and must not merge them.
