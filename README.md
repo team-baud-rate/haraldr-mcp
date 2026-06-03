@@ -45,6 +45,8 @@ Ask your agent things like:
 | `list_domains` | List the domains registered through Haraldr. |
 | `list_dns_records` | List the DNS records for a registered domain. |
 | `update_dns_records` | Add, remove, or change DNS records for a registered domain. |
+| `list_nameservers` | Show a registered domain's authoritative nameservers. |
+| `update_nameservers` | Point a registered domain at custom nameservers (e.g. Cloudflare) or reset to Haraldr DNS. |
 
 ## Buying a domain
 

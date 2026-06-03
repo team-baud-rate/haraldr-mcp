@@ -15,6 +15,8 @@ import { confirmPayment } from "./tools/confirm-payment.js";
 import { listDomains } from "./tools/list-domains.js";
 import { listDnsRecords } from "./tools/list-dns-records.js";
 import { updateDnsRecords } from "./tools/update-dns-records.js";
+import { listNameservers } from "./tools/list-nameservers.js";
+import { updateNameservers } from "./tools/update-nameservers.js";
 
 /** @typedef {import('./types.js').Tool} Tool */
 
@@ -30,6 +32,8 @@ const tools = [
   listDomains,
   listDnsRecords,
   updateDnsRecords,
+  listNameservers,
+  updateNameservers,
 ];
 /** @type {Map<string, Tool>} */
 const byName = new Map(tools.map((t) => [t.definition.name, t]));
