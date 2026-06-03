@@ -42,6 +42,9 @@ Ask your agent things like:
 | `search_domains` | Check exact names and discover keyword-based ideas. |
 | `order_domain` | Order a domain for $15 — returns a Stripe checkout link. |
 | `confirm_payment` | Confirm payment and registration after checkout. |
+| `list_domains` | List the domains registered through Haraldr. |
+| `list_dns_records` | List the DNS records for a registered domain. |
+| `update_dns_records` | Add, remove, or change DNS records for a registered domain. |
 
 ## Buying a domain
 

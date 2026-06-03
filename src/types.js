@@ -148,6 +148,27 @@
  */
 
 /**
+ * A DNS record exchanged with the /api/domains/:fqdn/dns endpoints.
+ *
+ * @typedef {Object} DnsRecord
+ * @property {string} [name]
+ * @property {string} [type]
+ * @property {string} [value]
+ * @property {number} [ttl]
+ * @property {number} [prio]
+ */
+
+/**
+ * Server response to GET and PUT /api/domains/:fqdn/dns.
+ *
+ * @typedef {Object} DnsRecordsResponse
+ * @property {string} [fqdn]
+ * @property {boolean} [zoneExists]
+ * @property {boolean} [zoneCreated]
+ * @property {DnsRecord[]} [records]
+ */
+
+/**
  * Domain price record returned in domain search results.
  *
  * @typedef {Object} DomainPrice

@@ -13,6 +13,8 @@ import { searchDomains } from "./tools/search-domains.js";
 import { orderDomain } from "./tools/order-domain.js";
 import { confirmPayment } from "./tools/confirm-payment.js";
 import { listDomains } from "./tools/list-domains.js";
+import { listDnsRecords } from "./tools/list-dns-records.js";
+import { updateDnsRecords } from "./tools/update-dns-records.js";
 
 /** @typedef {import('./types.js').Tool} Tool */
 
@@ -26,6 +28,8 @@ const tools = [
   orderDomain,
   confirmPayment,
   listDomains,
+  listDnsRecords,
+  updateDnsRecords,
 ];
 /** @type {Map<string, Tool>} */
 const byName = new Map(tools.map((t) => [t.definition.name, t]));

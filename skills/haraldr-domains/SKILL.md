@@ -5,7 +5,7 @@ description: Search for available domain names and buy them through Haraldr. Use
 
 # Haraldr Domains
 
-Help the user find a domain name and buy it. Haraldr is a domain registrar; this skill orchestrates the eight `haraldr` MCP tools so the user gets from "I want a domain" to "the domain is registered" without re-deriving the workflow each session.
+Help the user find a domain name, buy it, and manage its DNS. Haraldr is a domain registrar; this skill orchestrates the `haraldr` MCP tools so the user gets from "I want a domain" to "the domain is registered and pointing where I want" without re-deriving the workflow each session.
 
 ## When to use this skill
 
@@ -16,8 +16,9 @@ Trigger on any of these:
 - Buying / ordering / registering a domain
 - Following up after Stripe checkout (`did my payment go through?`)
 - Listing domains the user already owns through Haraldr
+- Viewing or editing DNS records (`point acme.io at my server`, `add a TXT record`)
 
-If the user just wants to *look up DNS records* or *manage a domain registered elsewhere*, this skill doesn't apply — Haraldr only manages domains it sold.
+If the user wants to *manage a domain registered elsewhere*, this skill doesn't apply — Haraldr only manages domains it sold. DNS for domains registered **through Haraldr** is in scope (see [Managing DNS](#managing-dns)).
 
 ## Required MCP
 
@@ -123,6 +124,38 @@ list_domains()
 ```
 
 Output is one line per domain with status, expiration, autorenew, and lock state. Render as a small table when there's more than one.
+
+## Managing DNS
+
+For domains registered through Haraldr, you can view and edit DNS records.
+
+**Viewing.** For "what DNS records does acme.io have?" or before any edit:
+
+```
+list_dns_records({ domain: "acme.io" })
+```
+
+Each line is `name  TYPE  value  ttl=…  [prio=…]`. If the domain has no DNS zone yet, the tool says so — the zone is created automatically on the first record you add.
+
+**Editing.** Use `update_dns_records` with any combination of `add`, `remove`, and `update`:
+
+```
+update_dns_records({
+  domain: "acme.io",
+  add: [{ name: "acme.io", type: "A", value: "192.0.2.10" }],
+})
+```
+
+Rules to follow:
+
+- **Always `list_dns_records` first** before a `remove` or `update`. Those operations must match an existing record *exactly* (name, type, value, ttl, prio) — copy the values from the listing rather than guessing.
+- An `update` entry needs both `original_record` (the current record) and `record` (the desired state).
+- `name` is the full hostname: the apex is the bare domain (`acme.io`), a subdomain is `www.acme.io`.
+- `ttl` defaults to 3600 and must be one of 900, 3600, 10800, 21600, 43200, 86400.
+- `prio` is required for `MX` and `SRV` records and ignored for others.
+- Confirm destructive edits with the user first (`To confirm: remove the A record for acme.io → 192.0.2.10?`). DNS changes take effect quickly and can break a live site.
+
+If the user is changing where their domain points (web host, email provider), they usually have records to apply from that provider — ask for them rather than inventing values.
 
 ## Logout
 
