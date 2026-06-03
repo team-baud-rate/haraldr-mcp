@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/team-baud-rate/haraldr-mcp/compare/v0.2.1...v0.3.0) (2026-06-03)
+
+
+### Features
+
+* add list_dns_records and update_dns_records tools ([69699c7](https://github.com/team-baud-rate/haraldr-mcp/commit/69699c7258b0869ebe9e5acb85ff1d3f7bb763b1))
+
 ## [0.2.1](https://github.com/team-baud-rate/haraldr-mcp/compare/v0.2.0...v0.2.1) (2026-05-01)
 
 

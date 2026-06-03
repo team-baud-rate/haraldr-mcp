@@ -1,6 +1,6 @@
 {
   "name": "haraldr",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "MCP server for Haraldr — login and (eventually) domain management tools for AI agents.",
   "type": "module",
   "bin": {
