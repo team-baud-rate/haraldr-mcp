@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/team-baud-rate/haraldr-mcp/compare/v0.3.0...v0.4.0) (2026-06-04)
+
+
+### Features
+
+* add list_nameservers and update_nameservers tools ([8005a01](https://github.com/team-baud-rate/haraldr-mcp/commit/8005a01782d0961d7e7cf28d8dfd279ad51867a0))
+
 # [0.3.0](https://github.com/team-baud-rate/haraldr-mcp/compare/v0.2.1...v0.3.0) (2026-06-03)
 
 
