@@ -169,6 +169,16 @@
  */
 
 /**
+ * Server response to GET and PUT /api/domains/:fqdn/nameservers.
+ *
+ * @typedef {Object} NameserversResponse
+ * @property {string} [fqdn]
+ * @property {string[]} [nameservers]
+ * @property {string | null} [nsGroup]
+ * @property {boolean} [usesOpenproviderDns]
+ */
+
+/**
  * Domain price record returned in domain search results.
  *
  * @typedef {Object} DomainPrice
