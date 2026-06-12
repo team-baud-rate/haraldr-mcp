@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
@@ -19,6 +21,11 @@ import { listNameservers } from "./tools/list-nameservers.js";
 import { updateNameservers } from "./tools/update-nameservers.js";
 
 /** @typedef {import('./types.js').Tool} Tool */
+
+/** The package version, reported to MCP clients during the handshake. */
+const { version } = JSON.parse(
+  readFileSync(new URL("../package.json", import.meta.url), "utf8"),
+);
 
 /** @type {Tool[]} */
 const tools = [
@@ -47,7 +54,7 @@ const byName = new Map(tools.map((t) => [t.definition.name, t]));
  */
 export async function runServer() {
   const server = new Server(
-    { name: "haraldr", version: "0.1.0" },
+    { name: "haraldr", version },
     { capabilities: { tools: {} } },
   );
 
