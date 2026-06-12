@@ -1,3 +1,10 @@
+## [0.4.1](https://github.com/team-baud-rate/haraldr-mcp/compare/v0.4.0...v0.4.1) (2026-06-12)
+
+
+### Bug Fixes
+
+* report the real package version to MCP clients ([f94187c](https://github.com/team-baud-rate/haraldr-mcp/commit/f94187c732981d2b67ecb35c552f5e21db3de40f))
+
 # [0.4.0](https://github.com/team-baud-rate/haraldr-mcp/compare/v0.3.0...v0.4.0) (2026-06-04)
 
 
