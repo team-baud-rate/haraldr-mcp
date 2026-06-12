@@ -1,6 +1,6 @@
 ---
 name: haraldr-domains
-description: Search for available domain names and buy them through Haraldr. Use this skill whenever the user wants to find, check availability of, register, purchase, or buy a domain name (.com, .io, .net, etc.), brainstorm domain ideas for a project/startup/blog, confirm a Stripe payment for a domain, or list domains they've already registered — even if they don't explicitly mention "Haraldr" by name.
+description: Search for available domain names and buy them through Haraldr. Use this skill whenever the user wants to find, check availability of, register, purchase, or buy a domain name (.com, .io, .net, etc.), brainstorm domain ideas for a project/startup/blog, confirm a Stripe payment for a domain, list domains they've already registered, view or edit DNS records, or change a domain's nameservers (e.g. point it at Cloudflare) — even if they don't explicitly mention "Haraldr" by name.
 ---
 
 # Haraldr Domains
@@ -17,6 +17,7 @@ Trigger on any of these:
 - Following up after Stripe checkout (`did my payment go through?`)
 - Listing domains the user already owns through Haraldr
 - Viewing or editing DNS records (`point acme.io at my server`, `add a TXT record`)
+- Viewing or changing nameservers (`what nameservers does acme.io use?`, `move my DNS to Cloudflare`)
 
 If the user wants to *manage a domain registered elsewhere*, this skill doesn't apply — Haraldr only manages domains it sold. DNS for domains registered **through Haraldr** is in scope (see [Managing DNS](#managing-dns)).
 
@@ -129,6 +130,8 @@ Output is one line per domain with status, expiration, autorenew, and lock state
 
 For domains registered through Haraldr, you can view and edit DNS records.
 
+These records are authoritative only while the domain uses Haraldr DNS — its default state. If the domain has been delegated to custom nameservers (see [Managing nameservers](#managing-nameservers)), the records here remain stored but have no effect. When DNS edits don't seem to take effect, or the user mentions an outside DNS provider, check `list_nameservers` before editing records.
+
 **Viewing.** For "what DNS records does acme.io have?" or before any edit:
 
 ```
@@ -157,6 +160,42 @@ Rules to follow:
 
 If the user is changing where their domain points (web host, email provider), they usually have records to apply from that provider — ask for them rather than inventing values.
 
+## Managing nameservers
+
+A domain's nameservers control *where* its DNS is hosted. Domains registered through Haraldr start on Openprovider's nameservers, which is what makes the records in [Managing DNS](#managing-dns) authoritative. Delegating to custom nameservers (Cloudflare, Route 53, etc.) hands DNS control to that provider and makes Haraldr's DNS tools inert for the domain until it's reset.
+
+**Viewing.** For "what nameservers does acme.io use?" or to check whether Haraldr DNS applies:
+
+```
+list_nameservers({ domain: "acme.io" })
+```
+
+The output says explicitly whether the domain uses Haraldr DNS or delegates to custom nameservers.
+
+**Delegating to custom nameservers** — e.g. the user wants to manage DNS at Cloudflare:
+
+```
+update_nameservers({
+  domain: "acme.io",
+  nameservers: ["aria.ns.cloudflare.com", "rick.ns.cloudflare.com"],
+})
+```
+
+Rules to follow:
+
+- Provide 2-13 hostnames, copied from the target DNS provider. Ask the user for them rather than guessing — every provider assigns its own.
+- If the domain currently uses Haraldr DNS, the first call does **not** apply the change — it returns a warning that switching disables Haraldr's DNS management (existing records stay stored but stop being authoritative). Relay that warning, get the user's explicit go-ahead, then re-run the same call with `confirm: true`.
+- Never pass `confirm: true` on the first attempt or on the user's behalf — the confirmation exists so the user consciously accepts losing Haraldr DNS management.
+- Registry propagation can take time. If the user immediately asks "why isn't it working", suggest waiting (minutes to hours) before debugging.
+
+**Returning to Haraldr DNS:**
+
+```
+update_nameservers({ domain: "acme.io", reset: true })
+```
+
+This points the domain back at Openprovider's nameservers and re-enables its Haraldr-hosted zone — any records still in it (`list_dns_records`) become authoritative again. No confirmation is needed.
+
 ## Logout
 
 Call `logout` when the user explicitly asks to sign out, or when they're handing the machine to someone else. Don't logout unprompted — sessions are durable and convenient.
@@ -175,3 +214,4 @@ Call `logout` when the user explicitly asks to sign out, or when they're handing
 - Don't echo the session cookie or any contents of `~/.config/haraldr/session.json`.
 - Don't retry `order_domain` after a payment failure — that creates a second order.
 - Don't ask the user for their password — Haraldr uses email codes only.
+- Don't pass `confirm: true` to `update_nameservers` without first showing the user the warning and getting their explicit OK.
